@@ -16,7 +16,7 @@ EXPOSE 8000
 
 ARG env=prod
 
-RUN cd /usr/app/public && ng build --prod
+RUN cd /usr/app/public && npm install && ng build --prod
 RUN cd /usr/app/
 
 CMD ["npm", "run", "server"]
