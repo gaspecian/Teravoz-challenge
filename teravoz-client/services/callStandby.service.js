@@ -9,7 +9,9 @@ var requestsLib = require("../lib/requests.js")
 exports.isNewUser = (body) => {
 
     CustomerModel.findOne({their_number: body.their_number}, function(err, result){
-        if (err) throw err;
+        if (err) {
+            console.log("Error DB: " + err)
+        }
         if (result){
 
             // Configure the request

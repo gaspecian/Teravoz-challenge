@@ -2,29 +2,25 @@
 var mongoose = require('mongoose')
 var CustomerModel = mongoose.model('Customer');
 
+exports.customers = async(req, res) => {
 
-exports.querys = async(req, res) => {
-    var queryType = req.params.query;
-    switch (queryType){
-        case 'prospects':
-            var query = {"status" : "prospect"}
-            break;
-        case 'onboard':
-            var query = {"status" : "onboard"}
-            break;
-        case 'exclients':
-            var query = {"status" : "exclients"}
-            break;
-        case 'all':
-            var query = {}
-            break;
-        default:
-            var query = {"status": "null"}
-    }
-
-    CustomerModel.find(query, function(err, result){
+    CustomerModel.find({}, function(err, result){
         if (err) {
-            return err
+            console.log("Error DB: " + err)
+            return res.status(500).json(err)
+        } else {
+            return res.status(200).json(result);
+        }
+    })
+}
+
+exports.customersByStatus = async(req, res) => {
+    var queryType = req.params.query;
+
+    CustomerModel.find({"status" : queryType}, function(err, result){
+        if (err) {
+            console.log("Error DB: " + err)
+            return res.status(500).json(err)
         } else {
             return res.status(200).json(result);
         }

@@ -12,6 +12,8 @@ exports.registerActor = (body) => {
     }
 
     CallsModel.updateOne({call_id: body.call_id}, {$push: {actors: form}}, function(err){
-        if (err) throw err;
+        if (err) {
+            console.log("Error DB: " + err)
+        }
     })
 }

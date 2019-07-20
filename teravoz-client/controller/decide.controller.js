@@ -3,11 +3,11 @@ var mongoose = require('mongoose')
 var CallsModel = mongoose.model('Calls');
 
 //controllers
-var callNewController = require("./controller/callNew.controller.js")
-var callStandbyController = require("./controller/callStandby.controller.js")
-var actorEnteredController = require("./controller/actorEntered.controller.js")
-var actorLeftController = require("./controller/actorLeft.controller.js")
-var callFinishedController = require("./controller/callFinish.controller.js")
+var callNewService = require("../services/callNew.service.js")
+var callStandbyService = require("../services/callStandby.service.js")
+var actorEnteredService = require("../services/actorEntered.service.js")
+var actorLeftService = require("../services/actorLeft.service.js")
+var callFinishedService = require("../services/callFinish.service.js")
 
 //decide type of service
 exports.decide = (req, res) => {
@@ -21,22 +21,22 @@ exports.decide = (req, res) => {
         })
     }
 
-    //Decides which controller to use  
+    //Decides which Service to use  
     switch (type){
         case 'call.new':
-            callNewController.registerEvent(body)
+            callNewService.registerEvent(body)
             break;
         case 'call.standby':
-            callStandbyController.isNewUser(body)
+            callStandbyService.isNewUser(body)
             break;
         case 'actor.entered':
-            actorEnteredController.registerActor(body)
+            actorEnteredService.registerActor(body)
             break;
         case 'actor.left':
-            actorLeftController.registerActorExit(body)
+            actorLeftService.registerActorExit(body)
             break;
         case 'call.finished':
-            callFinishedController.finishCall(body)
+            callFinishedService.finishCall(body)
             break;
     }
     res.status(200).json({status: 'Ok'})
